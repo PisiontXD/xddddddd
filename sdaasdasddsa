@@ -1,0 +1,221 @@
+import math
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+
+
+board =["1. Dzielenie",
+        "2. Mnożenie",
+        "3. Pierwiastkowanie",
+        "4. Dodawanie",
+        "5. Potęgowanie",
+        "6. Rysowanie funkcji",
+        "7. Wyjdź",
+        "8. Zapisane wyniki"]
+
+
+def save_file(wynik):
+    zgoda = input("Czy chcesz zapisać swoją pracę? tak / nie ")
+    if zgoda == "tak":
+        f = open("Zapisane wyniki.txt", "a")
+        f.writelines("\n" + format(wynik))
+        f.close()
+    elif zgoda == "nie":
+        pass
+    else:
+        print("Wpisz tak albo nie ")
+        save_file(wynik)
+
+
+def wybor1():
+    powrót = int(input("Wybierz 1 jeśli chciałbyś mnożyć dalej, wybierz 2 jeśli chciałbyś wrócić do pola wyboru: "))
+    if powrót == 1:
+        mnozenie()
+    elif powrót == 2:
+        choose_what()
+
+
+def wybor2():
+        powrót = int(input("Wybierz 1 jeśli chciałbyś dzielić dalej, wybierz 2 jeśli chciałbyś wrócić do pola wyboru: "))
+        if powrót == 1:
+            dzielenie()
+        elif powrót == 2:
+            choose_what()
+
+def wybor3():
+    powrót = int(input("Wybierz 1 jeśli chciałbyś pierwiastkować dalej, wybierz 2 jeśli chciałbyś wrócić do pola wyboru: "))
+    if powrót == 1:
+        oblicz_pierwiastek()
+    elif powrót == 2:
+        choose_what()
+
+def wybor4():
+    powrót = int(
+        input("Wybierz 1 jeśli chciałbyś dodawać dalej, wybierz 2 jeśli chciałbyś wrócić do pola wyboru: "))
+    if powrót == 1:
+        dodawanie()
+    elif powrót == 2:
+        choose_what()
+
+
+def wybor5():
+    powrót = int(
+        input("Wybierz 1 jeśli chciałbyś rysować dalej, wybierz 2 jeśli chciałbyś wrócić do pola wyboru: "))
+    if powrót == 1:
+        rysuj_funkcje()
+    elif powrót == 2:
+        choose_what()
+
+def wybor6():
+    powrót = int(
+        input("Wybierz 1 jeśli chciałbyś potęgować dalej, wybierz 2 jeśli chciałbyś wrócić do pola wyboru: "))
+    if powrót == 1:
+        potegowanie()
+    elif powrót == 2:
+        choose_what()
+
+
+def zobacz_zapisane():
+    pass
+
+def mnozenie():
+        a = float(input("Podaj pierwszą liczbe: "))
+        b = float(input("Podaj drugą liczbe: "))
+        wynik = a * b
+        print("Wynik to: ", float(wynik))
+        save_file(str(a) + " * " + str(b) + " = " + str(wynik))
+        wybor1()
+
+
+
+def rysuj_funkcje():
+    x = float(input("Wybierz początek interwału "))
+    v = float(input("Wybierz koniec interwału "))
+    z = float(input("Wybierz ile mają wynosić odstępy mniędzy wartościami "))
+    x = (np.arange(x,v,z))
+    a = int(input("Podaj wartość a: "))
+    b = int(input("Podaj wartość b: "))
+    y = [(a * i + b) for i in x]
+
+    plt.plot(x, y,)
+    plt.plot(0, 0, 'or')
+    plt.title('Wykres Funkcji')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.grid(True)
+    plt.show()
+    save_file("Wzór funkcji: " + str(y))
+    wybor5()
+
+
+def oblicz_pierwiastek():
+    while True:
+        pierwiastek = int(input("Z czego chciałbyś obliczyć pierwiastek: "))
+        stopien = int(input("Jaki stopień? "))
+        wynik = pierwiastek ** (1 / float(stopien))
+        print("Wynik to:", wynik)
+        save_file(str(pierwiastek) + " ** " + str(1/float(stopien)) + " = " + str(wynik))
+        wybor3()
+
+def dodawanie():
+    d1 = []
+    n = int(input("Ile chcesz dodać do siebie liczb: "))
+    for i in range(n):
+        numbers = int(input("Podaj liczby: "))
+        d1.append(int(numbers))
+    wynik = sum(d1)
+    print("Wynik to: ", wynik)
+    save_file(str(wynik))
+    wybor4()
+
+
+def dzielenie():
+    try:
+        while True:
+            a = int(input("Podaj pierwszą liczbe: "))
+            b = int(input("Podaj drugą liczbe: "))
+            reszta = a % b
+            wynik = a/b
+            if reszta == 0 and a != 0:
+                print("Wynik to: ", wynik)
+            elif a != 0 and b < a:
+                print("Wynik to:", (wynik), "Reszta z tego działania to: ", reszta)
+            elif a < b:
+                print("Wynik to:", (wynik))
+            save_file(str(a) + " / " + str(b) + " = " + str(wynik))
+            wybor2()
+
+    except ZeroDivisionError:
+        print("Błąd, nie można dzielić przez zero!")
+        dzielenie()
+
+
+def potegowanie():
+    while True:
+        potega = int(input("Z czego chciałbyś obliczyć potęgę: "))
+        stopien = int(input("Jaki stopień? "))
+        wynik = potega**stopien
+        w = float(wynik)
+        print("Wynik to:", w)
+        save_file(str(potega)+" ** " + str(stopien) + " = " + str(w))
+        wybor6()
+
+
+
+
+
+def choose_what():
+
+    print(board[0])
+    print(board[1])
+    print(board[2])
+    print(board[3])
+    print(board[4])
+    print(board[5])
+    print(board[6])
+    print(board[7] + "\n")
+
+    try:
+        choose = int(input("Co chciałbyś zrobić? ")) - 1
+        if choose == 0:
+            dzielenie()
+        elif choose == 1:
+            mnozenie()
+        elif choose == 2:
+            oblicz_pierwiastek()
+        elif choose == 3:
+            dodawanie()
+        elif choose == 4:
+            potegowanie()
+        elif choose == 5:
+            rysuj_funkcje()
+        elif choose == 6:
+            confirmation = input("Czy napewno chcesz wyjść? tak / nie ")
+            if confirmation == "tak":
+                quit()
+            if confirmation == "nie":
+                choose_what()
+        elif choose ==7:
+            pass
+
+
+        else:
+            print("Podaj liczbę w zakresie od 1 do 6.")
+            choose_what()
+    except ZeroDivisionError:
+        print("Błąd, podaj liczbe całkowitą w zakresie od 1 do 6.")
+        choose_what()
+    except ValueError:
+        print("Błąd, używaj tylko cyfr do wybierania co chcesz robić.")
+        choose_what()
+
+
+
+print()
+
+choose_what()
+
+print()
+
+
